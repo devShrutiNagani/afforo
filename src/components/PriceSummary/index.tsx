@@ -1,66 +1,86 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { STRINGS } from '../../constants/strings';
+import { COLORS } from '../../constants/colors';
 
 import { styles } from './style';
 
 interface PriceSummaryProps {
-  subtotal: number;
-  deliveryFee: number;
-  discount: number;
-  platformFee?: number;
-  total: number;
+  currentSubtotal: number;
+  currentDiscount: number;
+  platformFee: number;
+  couponDiscountAmount: number;
+  finalPayable: number;
+  totalSavings: number;
 }
 
 export const PriceSummary: React.FC<PriceSummaryProps> = ({
-  subtotal,
-  deliveryFee,
-  discount,
-  platformFee = 15,
-  total,
+  currentSubtotal,
+  currentDiscount,
+  platformFee,
+  couponDiscountAmount,
+  finalPayable,
+  totalSavings,
 }) => {
+  const itemTotalAfterDiscount = currentSubtotal - currentDiscount;
+
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.labelGroup}>
-          <Text style={styles.label}>Item total</Text>
-          <View style={styles.savedBg}><Text style={styles.savedText}>Saved ₹20</Text></View>
-        </View>
-        <Text style={styles.value}>₹{subtotal.toFixed(0)}</Text>
+    <View style={styles.billDetailsContainer}>
+
+      {/* ITEM TOTAL */}
+      <View style={styles.billRow}>
+        <Text style={styles.billLabel}>{STRINGS.itemTotal}</Text>
+        <Text style={styles.billValue}>₹{currentSubtotal}</Text>
       </View>
-      
-      <View style={[styles.row, { alignItems: 'flex-start' }]}>
-        <View>
-          <Text style={styles.label}>Delivery fee</Text>
-          <Text style={styles.subLabel}>Add items worth ₹20 to get free delivery</Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.strikethrough}>₹44</Text>
-          <Text style={[styles.value, styles.free]}>FREE</Text>
-        </View>
-      </View>
-      
-      {discount > 0 && (
-        <View style={styles.row}>
-          <Text style={styles.label}>Discount</Text>
-          <Text style={styles.value}>-₹{discount.toFixed(0)}</Text>
+
+      {/* PRODUCT DISCOUNT */}
+      {currentDiscount > 0 && (
+        <View style={styles.billRow}>
+          <Text style={styles.billLabel}>Product Discount</Text>
+          <Text style={[styles.billValue, { color: COLORS.primary }]}>
+            -₹{currentDiscount}
+          </Text>
         </View>
       )}
-      
-      <View style={styles.row}>
-        <Text style={styles.label}>Platform fee</Text>
-        <Text style={styles.value}>₹{platformFee.toFixed(0)}</Text>
+
+      {/* AFTER DISCOUNT PRICE */}
+      <View style={styles.billRow}>
+        <Text style={styles.billLabel}>Subtotal after discount</Text>
+        <Text style={styles.billValue}>₹{itemTotalAfterDiscount}</Text>
       </View>
-      
-      <View style={styles.divider} />
-      
-      <View style={styles.row}>
-        <Text style={styles.totalLabel}>Total payable amount</Text>
-        <Text style={styles.totalValue}>₹{(total + platformFee).toFixed(0)}</Text>
+
+      {/* COUPON */}
+      {couponDiscountAmount > 0 && (
+        <View style={styles.billRow}>
+          <Text style={styles.billLabel}>Coupon Discount</Text>
+          <Text style={[styles.billValue, { color: COLORS.primary }]}>
+            -₹{couponDiscountAmount}
+          </Text>
+        </View>
+      )}
+
+      {/* PLATFORM FEE */}
+      <View style={styles.billRow}>
+        <Text style={styles.billLabel}>Platform fee</Text>
+        <Text style={styles.billValue}>₹{platformFee}</Text>
       </View>
-      
-      <View style={styles.savingsBox}>
-        <Text style={styles.savingsBoxText}>You are saving ₹99 with this order!</Text>
+
+      <View style={styles.dashedDividerSpacer} />
+
+      {/* FINAL */}
+      <View style={styles.billRow}>
+        <Text style={styles.totalLabel}>To Pay</Text>
+        <Text style={styles.totalValue}>₹{Math.max(0, finalPayable)}</Text>
       </View>
+
+      {/* SAVINGS */}
+      {totalSavings > 0 && (
+        <View style={styles.savingsBannerBottom}>
+          <Text style={styles.savingsBannerBottomText}>
+            🎉 You saved ₹{totalSavings}
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

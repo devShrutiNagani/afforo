@@ -6,6 +6,7 @@ export interface Product {
   image: string;
   weight: string;
   isOutOfStock?: boolean;
+  quantity?: number;
 }
 
 export interface CartItemType extends Product {

@@ -1,46 +1,56 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { CartItemType } from '../../types';
-import { QuantitySelector } from '../QuantitySelector';
+import { Minus, Plus } from 'lucide-react-native';
+import { URLS } from '../../constants/images';
+import { COLORS } from '../../constants/colors';
 import { styles } from './style';
 
 interface CartItemProps {
-  item: CartItemType;
+  item: any;
   onUpdateQuantity: (id: string, quantity: number) => void;
+  onRemove: (id: string) => void;
+  isDummy?: boolean;
 }
 
-export const CartItem: React.FC<CartItemProps> = React.memo(({ item, onUpdateQuantity }) => {
+export const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onRemove, isDummy = false }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <View style={styles.discountTag}>
-          <Text style={styles.discountText}>52%</Text>
-          <Text style={styles.discountTextSmall}>OFF</Text>
-        </View>
-        <Image source={{ uri: item.image }} style={styles.image} resizeMode="contain" />
+    <View style={styles.cartItemRow}>
+      <View style={styles.cartItemImageContainer}>
+        <Image source={{ uri: item.image || URLS.cartThumb }} style={styles.cartItemImage} />
       </View>
-      
-      <View style={styles.contentContainer}>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.title} numberOfLines={2}>Gold Premium Assam Tea Rich Taste & Irresistible</Text>
-          <Text style={styles.weight}>3 x 1 kg</Text>
+      <View style={styles.cartItemInfo}>
+        <Text style={styles.cartItemTitle} numberOfLines={2}>{item.title}</Text>
+        <Text style={styles.cartItemWeight}>{item.weight}</Text>
+      </View>
+      <View style={styles.cartItemRight}>
+        <View style={styles.compactQtySelector}>
+          <TouchableOpacity
+            style={styles.qtyBtn}
+            onPress={() => {
+              if (item.quantity > 1) {
+                onUpdateQuantity(item.id, item.quantity - 1);
+              } else {
+                onRemove(item.id);
+              }
+            }}
+          >
+            <Minus size={14} color={COLORS.primary} />
+          </TouchableOpacity>
+          <Text style={styles.qtyText}>{item.quantity}</Text>
+          <TouchableOpacity
+            style={styles.qtyBtn}
+            onPress={() => {
+              onUpdateQuantity(item.id, item.quantity + 1);
+            }}
+          >
+            <Plus size={14} color={COLORS.primary} />
+          </TouchableOpacity>
         </View>
-        
-        <View style={styles.actionContainer}>
-          <QuantitySelector
-            quantity={item.quantity}
-            onIncrease={() => onUpdateQuantity(item.id, item.quantity + 1)}
-            onDecrease={() => onUpdateQuantity(item.id, item.quantity - 1)}
-            style={styles.quantity}
-          />
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>₹{item.price.toFixed(0)}</Text>
-            {item.originalPrice && (
-              <Text style={styles.originalPrice}>₹{(item.originalPrice).toFixed(0)}</Text>
-            )}
-          </View>
+        <View style={styles.cartItemPrices}>
+          <Text style={styles.cartItemPrice}>₹{item.price}</Text>
+          <Text style={styles.cartItemOrigPrice}>₹{item.originalPrice || item.price}</Text>
         </View>
       </View>
     </View>
   );
-});
+};

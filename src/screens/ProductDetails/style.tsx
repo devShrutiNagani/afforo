@@ -5,6 +5,7 @@ import { FONTS } from '../../constants/fonts';
 
 export const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: COLORS.white },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -12,29 +13,46 @@ export const styles = StyleSheet.create({
     height: 56,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
-    backgroundColor: COLORS.white
+    backgroundColor: COLORS.white,
   },
   iconBtn: { padding: 8 },
-  headerTitle: { flex: 1, fontSize: 13, fontFamily: FONTS.bold, color: COLORS.textDark, textAlign: 'center' },
+  headerTitle: {
+    flex: 1,
+    fontSize: 13,
+    fontFamily: FONTS.bold,
+    color: COLORS.textDark,
+    textAlign: 'center',
+  },
+
   container: { flex: 1, backgroundColor: COLORS.background },
 
+  // HERO SECTION
   heroSection: {
     backgroundColor: COLORS.white,
     margin: SPACING.m,
     borderRadius: 16,
     padding: SPACING.m,
-    position: 'relative',
-    shadowColor: COLORS.black, shadowOpacity: 0.05, shadowRadius: 4, shadowOffset: { width: 0, height: 2 }, elevation: 2,
   },
   heroTag: {
-    position: 'absolute', top: 0, left: 16,
+    position: 'absolute',
+    top: 0,
+    left: 16,
     backgroundColor: COLORS.tealDark,
-    paddingHorizontal: 8, paddingVertical: 8,
-    borderBottomLeftRadius: 4, borderBottomRightRadius: 4,
-    alignItems: 'center', zIndex: 10
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
   },
-  heroTagText: { color: COLORS.white, fontSize: 13, fontFamily: FONTS.bold, lineHeight: 14 },
-  heroTagSub: { color: COLORS.white, fontSize: 10, fontFamily: FONTS.bold },
+  heroTagText: {
+    color: COLORS.white,
+    fontSize: 13,
+    fontFamily: FONTS.bold,
+  },
+  heroTagSub: {
+    color: COLORS.white,
+    fontSize: 10,
+    fontFamily: FONTS.bold,
+  },
 
   carouselContainer: {
     height: 240,
@@ -47,219 +65,139 @@ export const styles = StyleSheet.create({
   },
   heroImage: { width: '80%', height: '100%' },
 
-  paginationDots: { flexDirection: 'row', justifyContent: 'center', marginBottom: SPACING.m },
+  paginationDots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: SPACING.m,
+  },
   dot: { width: 6, height: 6, borderRadius: 3, marginHorizontal: 3 },
   dotActive: { backgroundColor: COLORS.orange },
   dotInactive: { backgroundColor: COLORS.border },
-  heroContent: {},
-  heroBrand: { fontSize: 12, color: COLORS.textMuted, marginBottom: 4 },
-  heroTitle: { fontSize: 16, fontFamily: FONTS.bold, color: COLORS.textDark, marginBottom: 8, lineHeight: 22 },
-  heroWeight: { fontSize: 12, color: COLORS.textMuted, marginBottom: 12 },
-  heroActionRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' },
-  heroPriceRow: { flexDirection: 'row', alignItems: 'baseline' },
-  heroPrice: { fontSize: 20, fontFamily: FONTS.bold, color: COLORS.textDark, marginRight: 8 },
-  heroOrigPrice: { fontSize: 14, color: COLORS.textLight, textDecorationLine: 'line-through' },
-  heroBtn: { backgroundColor: COLORS.primary, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8 },
-  heroBtnText: { color: COLORS.white, fontFamily: FONTS.bold, fontSize: 14 },
 
+  heroBrand: { fontSize: 12, color: COLORS.textMuted },
+  heroTitle: {
+    fontSize: 16,
+    fontFamily: FONTS.bold,
+    color: COLORS.textDark,
+    marginVertical: 6,
+  },
+  heroWeight: { fontSize: 12, color: COLORS.textMuted },
+
+  heroActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  heroPriceRow: { flexDirection: 'row', alignItems: 'center' },
+  heroPrice: {
+    fontSize: 20,
+    fontFamily: FONTS.bold,
+    color: COLORS.textDark,
+    marginRight: 8,
+  },
+  heroOrigPrice: {
+    fontSize: 14,
+    color: COLORS.textLight,
+    textDecorationLine: 'line-through',
+  },
+
+  heroBtn: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  heroBtnText: {
+    color: COLORS.white,
+    fontFamily: FONTS.bold,
+    fontSize: 14,
+  },
+
+  // SECTIONS
   sectionBlock: {
     backgroundColor: COLORS.white,
     marginHorizontal: SPACING.m,
     marginBottom: SPACING.m,
     borderRadius: 16,
     padding: SPACING.m,
-    shadowColor: COLORS.black, shadowOpacity: 0.05, shadowRadius: 4, shadowOffset: { width: 0, height: 2 }, elevation: 2,
   },
-  sectionTitle: { fontSize: 14, fontFamily: FONTS.bold, color: COLORS.textDark, marginBottom: 16 },
+  sectionTitle: {
+    fontSize: 14,
+    fontFamily: FONTS.bold,
+    color: COLORS.textDark,
+    marginBottom: 12,
+  },
 
-  descriptionText: { fontSize: 13, color: COLORS.textMedium, lineHeight: 20, fontFamily: FONTS.regular },
+  descriptionText: {
+    fontSize: 13,
+    color: COLORS.textMedium,
+    lineHeight: 20,
+    fontFamily: FONTS.regular,
+  },
 
-  cardContainer: {
-    width: 156,
-    marginRight: 12,
-    position: 'relative',
-  },
-  discountTagLarge: {
-    position: 'absolute', top: 0, left: 0,
-    backgroundColor: COLORS.tealDark,
-    paddingHorizontal: 6, paddingVertical: 4,
-    borderBottomRightRadius: 8, borderTopLeftRadius: 8,
-    alignItems: 'center', zIndex: 10
-  },
-  discountTextLarge: { color: COLORS.white, fontSize: 10, fontFamily: FONTS.bold, lineHeight: 10 },
-  discountTextSmall: { color: COLORS.white, fontSize: 7, fontFamily: FONTS.bold },
-  cardImageContainer: {
-    backgroundColor: COLORS.inputBg,
-    borderRadius: 12,
-    borderWidth: 1, borderColor: COLORS.offWhite,
-    justifyContent: 'center', alignItems: 'center',
-    padding: 16,
-    marginBottom: 8
-  },
-  cardImage: { width: 80, height: 80, resizeMode: 'contain' },
-  cardContent: {},
-  brandText: { fontSize: 10, color: COLORS.textMuted, marginBottom: 2 },
-  cardTitle: { fontSize: 12, fontFamily: FONTS.medium, color: COLORS.textDark, height: 34, lineHeight: 16, marginBottom: 4 },
-  cardWeight: { fontSize: 10, color: COLORS.textMuted, marginBottom: 8 },
-  cardActionRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  cardPriceBox: { flexDirection: 'row', alignItems: 'baseline' },
-  cardPrice: { fontSize: 13, fontFamily: FONTS.bold, color: COLORS.textDark, marginRight: 4 },
-  cardOrigPrice: { fontSize: 10, color: COLORS.textLight, textDecorationLine: 'line-through' },
-  greenSolidBtn: { backgroundColor: COLORS.primary, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 6, borderRadius: 6 },
-  greenSolidText: { color: COLORS.white, fontSize: 10, fontFamily: FONTS.bold },
-
-  // Modal styles
+  // COMMON MODAL
   modalOverlay: {
     flex: 1,
     backgroundColor: COLORS.overlay,
     justifyContent: 'flex-end',
   },
-  modalContent: {
+
+  // ADDRESS MODAL
+  addressModalContent: {
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: SPACING.l,
-    paddingBottom: SPACING.xxxl,
   },
-  modalTitle: {
-    fontSize: 14,
-    fontFamily: FONTS.bold,
-    color: COLORS.textDark,
-    lineHeight: 20,
-    marginBottom: SPACING.l,
-  },
-  variantRow: {
+  addressModalHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.borderDark,
-    borderRadius: 12,
-    padding: SPACING.s,
-    marginBottom: SPACING.m,
+    marginBottom: 20,
   },
-  variantImageContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 6,
-    backgroundColor: COLORS.inputBg,
-    justifyContent: 'center',
+  addressHeaderRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginRight: SPACING.m,
-    position: 'relative',
-  },
-  variantImage: {
-    width: 32,
-    height: 32,
-  },
-  variantBadge: {
-    position: 'absolute',
-    top: -6,
-    right: -6,
-    backgroundColor: COLORS.orange,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  variantBadgeText: {
-    color: COLORS.white,
-    fontSize: 9,
-    fontFamily: FONTS.bold,
-  },
-  variantInfo: {
     flex: 1,
-    flexDirection: 'row',
+  },
+  mapPinCirc: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: COLORS.teal,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  addressModalTitle: {
+    fontSize: 16,
+    fontFamily: FONTS.medium,
+    color: COLORS.textDark,
+  },
+  closeBtn: { padding: 4 },
+  closeBtnText: {
+    fontSize: 18,
+    color: COLORS.textLight,
+  },
+
+  addressModalBtn: {
+    backgroundColor: COLORS.confirmGreen,
+    borderRadius: 12,
+    paddingVertical: 14,
     alignItems: 'center',
   },
-  variantWeight: {
-    fontSize: 12,
-    color: COLORS.textMedium,
-    marginRight: SPACING.m,
+  addressModalBtnText: {
+    color: COLORS.white,
+    fontSize: 15,
     fontFamily: FONTS.medium,
   },
-  variantPriceBox: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  variantPrice: {
-    fontSize: 13,
-    fontFamily: FONTS.bold,
-    color: COLORS.textDark,
-    marginRight: 4,
-  },
-  variantOrigPrice: {
-    fontSize: 11,
-    color: COLORS.textLight,
-    textDecorationLine: 'line-through',
-  },
-  modalAddBtn: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 6,
-    minWidth: 70,
-    alignItems: 'center',
-  },
-  modalAddText: {
-    color: COLORS.white,
-    fontSize: 12,
-    fontFamily: FONTS.bold,
-  },
-  modalQtySelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    borderRadius: 6,
-    height: 32,
-    backgroundColor: COLORS.white,
-  },
-  modalQtyBtn: {
-    paddingHorizontal: 8,
-    height: '100%',
-    justifyContent: 'center',
-  },
-  modalQtyText: {
-    color: COLORS.primary,
-    fontSize: 12,
-    fontFamily: FONTS.bold,
-    minWidth: 16,
-    textAlign: 'center',
-  },
-  confirmBtn: {
-    backgroundColor: COLORS.confirmGreen,
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: SPACING.s,
-  },
-  confirmBtnText: {
-    color: COLORS.white,
-    fontSize: 14,
-    fontFamily: FONTS.bold,
-  },
 
-  addressModalContent: { backgroundColor: COLORS.white, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: SPACING.l, paddingBottom: 40 },
-  addressModalHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 24, justifyContent: 'center' },
-  mapPinCirc: { width: 28, height: 28, borderRadius: 14, backgroundColor: COLORS.teal, justifyContent: 'center', alignItems: 'center', marginRight: 10 },
-  addressModalTitle: { fontSize: 17, fontFamily: FONTS.medium, color: COLORS.textDark },
-  addressModalBtn: { backgroundColor: COLORS.confirmGreen, borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
-  addressModalBtnText: { color: COLORS.white, fontSize: 16, fontFamily: FONTS.medium },
-
-  // New Utility Styles to remove inline ones
-  chevronMini: { marginLeft: 2 },
-  chevronHeader: { marginLeft: 4, marginTop: 1 },
-  negativeMarginM: { marginHorizontal: -SPACING.m },
+  // UTILITIES
+  horizontalListPadding: {
+    paddingHorizontal: SPACING.m,
+  },
+  negativeMarginM: {
+    marginHorizontal: -SPACING.m,
+  },
   spacer40: { height: 40 },
-  addressHeaderRow: { flexDirection: 'row', alignItems: 'center', flex: 1 },
-  closeBtn: { padding: 4 },
-  closeBtnText: { fontSize: 18, color: COLORS.textLight, fontFamily: FONTS.medium },
-  greenSolidBtnAdd: { backgroundColor: COLORS.primary, paddingHorizontal: 16, minWidth: 60, justifyContent: 'center', borderRadius: 6, paddingVertical: 6 },
-  headerAddress: { flexDirection: 'row', alignItems: 'center', paddingVertical: 4 },
-  headerAddressText: { fontSize: 13, color: COLORS.white, fontFamily: FONTS.medium },
-  horizontalListPadding: { paddingHorizontal: SPACING.m },
-  addressBox: { flexDirection: 'row', alignItems: 'center', paddingVertical: 4 },
-  addressText: { color: COLORS.white, fontSize: 14, fontFamily: FONTS.bold },
-  addressSubText: { color: COLORS.white, fontSize: 12, marginLeft: 4, fontFamily: FONTS.medium },
 });

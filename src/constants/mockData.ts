@@ -2,9 +2,31 @@ import { URLS } from './images';
 import { STRINGS } from './strings';
 
 export const COUPONS_DATA = [
-  { id: '1', code: 'SAVE120', pct: '₹120', criteria: 'Add items worth ₹20\nto avail this offer' },
-  { id: '2', code: 'AFORRO6', pct: '6%', criteria: null },
-  { id: '3', code: 'FLAT250', pct: '₹250', criteria: null }
+  {
+    id: '1',
+    code: 'SAVE120',
+    type: 'flat',          // flat discount
+    value: 120,            // ₹120 OFF
+    minOrder: 20,          // condition
+    description: 'Add items worth ₹20 to avail this offer',
+  },
+  {
+    id: '2',
+    code: 'AFORRO6',
+    type: 'percent',       // % discount
+    value: 6,              // 6%
+    minOrder: 1200,
+    maxDiscount: 120,      // cap (optional)
+    description: 'Upto ₹120 on orders above ₹1200',
+  },
+  {
+    id: '3',
+    code: 'FLAT250',
+    type: 'flat',
+    value: 250,            // ₹250 OFF
+    minOrder: 1200,
+    description: 'Flat ₹250 off on orders above ₹1200',
+  },
 ];
 
 export const SIMILAR_ITEMS = [
@@ -20,11 +42,11 @@ export const SUGGESTED_ITEMS = [
 ];
 
 export const OUT_OF_STOCK_ITEM = {
-  id: 'oos1', 
-  title: 'Dairy Milk Silk Chocolate Bar', 
-  weight: '64 g', 
-  price: 120, 
-  originalPrice: 120, 
+  id: 'oos1',
+  title: 'Dairy Milk Silk Chocolate Bar',
+  weight: '64 g',
+  price: 120,
+  originalPrice: 120,
   image: URLS.chocolate
 };
 

@@ -11,6 +11,9 @@ import { SIMILAR_ITEMS, SUGGESTED_ITEMS, MAIN_PRODUCT, PRODUCT_IMAGES } from '..
 import { URLS } from '../../constants/images';
 import { STRINGS } from '../../constants/strings';
 import { styles } from './style';
+import { SuggestedItem } from '../../components/SuggestedItem';
+import { VariantBottomSheet } from '../../components/VariantBottomSheet';
+import { AddressRequiredModal } from '../../components/AddressRequiredModal';
 
 const { width } = Dimensions.get('window');
 
@@ -62,52 +65,6 @@ export const ProductDetailsScreen = () => {
     });
   };
 
-  const renderProductCard = (item: any) => {
-    // Process discount "52% OFF", extracting first digit and "OFF" smartly
-    const parts = (item.discount || '50% OFF').split(' ');
-    const numberStr = parts[0];
-    const suffix = parts.length > 1 ? parts[1] : '';
-
-    return (
-      <View style={styles.cardContainer}>
-        <View style={styles.discountTagLarge}>
-          <Text style={styles.discountTextLarge}>{numberStr}</Text>
-          <Text style={styles.discountTextSmall}>{suffix}</Text>
-        </View>
-        <View style={styles.cardImageContainer}>
-          <Image
-            source={{ uri: item.image }}
-            style={styles.cardImage}
-          />
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.brandText}>{item.brand}</Text>
-          <Text style={styles.cardTitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.cardWeight}>{item.weight}</Text>
-
-          <View style={styles.cardActionRow}>
-            <View style={styles.cardPriceBox}>
-              <Text style={styles.cardPrice}>₹{item.price}</Text>
-              <Text style={styles.cardOrigPrice}>₹{item.originalPrice}</Text>
-            </View>
-            {item.hasOptions ? (
-              <TouchableOpacity style={styles.greenSolidBtn} onPress={() => { setSelectedModalItem(item); setModalVisible(true); }}>
-                <Text style={styles.greenSolidText}>{STRINGS.options2}</Text>
-                <ChevronDown color={COLORS.white} size={14} style={styles.chevronMini} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.greenSolidBtnAdd}
-                onPress={() => handleAddDirect(item.id, item.title, item.weight, item.price, item.image, item.isOutOfStock)}
-              >
-                <Text style={styles.greenSolidText}>{STRINGS.add}</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -156,7 +113,7 @@ export const ProductDetailsScreen = () => {
             ))}
           </View>
 
-          <View style={styles.heroContent}>
+          <View>
             <Text style={styles.heroBrand}>Cadbury</Text>
             <Text style={styles.heroTitle}>Dairy milk Silk Chocolate Bar</Text>
             <Text style={styles.heroWeight}>64 g</Text>
@@ -168,7 +125,7 @@ export const ProductDetailsScreen = () => {
               </View>
               <TouchableOpacity
                 style={styles.heroBtn}
-                onPress={() => handleAddDirect(MAIN_PRODUCT.id, MAIN_PRODUCT.title, MAIN_PRODUCT.weight, MAIN_PRODUCT.price, MAIN_PRODUCT.image)}
+                onPress={() => handleAddDirect(MAIN_PRODUCT.id, MAIN_PRODUCT.title, MAIN_PRODUCT.weight, MAIN_PRODUCT.price, MAIN_PRODUCT.image, true)}
               >
                 <Text style={styles.heroBtnText}>{STRINGS.add}</Text>
               </TouchableOpacity>
@@ -183,7 +140,25 @@ export const ProductDetailsScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={SIMILAR_ITEMS.map((item, index) => ({ ...item, hasOptions: index % 2 === 0 }))}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => renderProductCard(item)}
+            renderItem={({ item }) => (
+              <SuggestedItem
+                item={item}
+                onOptions={(it) => {
+                  setSelectedModalItem(it);
+                  setModalVisible(true);
+                }}
+                onAdd={(it) =>
+                  addItem({
+                    id: it.id,
+                    title: it.title,
+                    weight: it.weight,
+                    price: it.price,
+                    image: it.image,
+                    isOutOfStock: it.isOutOfStock,
+                  })
+                }
+              />
+            )}
             contentContainerStyle={styles.horizontalListPadding}
             style={styles.negativeMarginM}
           />
@@ -203,132 +178,47 @@ export const ProductDetailsScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={SUGGESTED_ITEMS.map((item, index) => ({ ...item, hasOptions: index % 2 !== 0 }))}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => renderProductCard(item)}
+            renderItem={({ item }) => (
+              <SuggestedItem
+                item={item}
+                onOptions={(it) => {
+                  setSelectedModalItem(it);
+                  setModalVisible(true);
+                }}
+                onAdd={(it) =>
+                  addItem({
+                    id: it.id,
+                    title: it.title,
+                    weight: it.weight,
+                    price: it.price,
+                    image: it.image,
+                    isOutOfStock: it.isOutOfStock,
+                  })
+                }
+              />
+            )}
             contentContainerStyle={styles.horizontalListPadding}
             style={styles.negativeMarginM}
           />
         </View>
-
         <View style={styles.spacer40} />
-
       </ScrollView>
 
-      <Modal
+      <VariantBottomSheet
         visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <View style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>{selectedModalItem?.title}</Text>
+        item={selectedModalItem}
+        onClose={() => setModalVisible(false)}
+        onAdd={(data) => addItem(data)}
+      />
 
-                {selectedModalItem?.variants?.map((variant: any, index: number) => (
-                  <View style={styles.variantRow} key={index}>
-                    <View style={styles.variantImageContainer}>
-                      <Image source={{ uri: selectedModalItem.image }} style={styles.variantImage} />
-                      <View style={styles.variantBadge}><Text style={styles.variantBadgeText}>{variant.weight.charAt(0)}</Text></View>
-                    </View>
-                    <View style={styles.variantInfo}>
-                      <Text style={styles.variantWeight}>{variant.weight}</Text>
-                      <View style={styles.variantPriceBox}>
-                        <Text style={styles.variantPrice}>₹{variant.price}</Text>
-                        <Text style={styles.variantOrigPrice}>₹{variant.originalPrice}</Text>
-                      </View>
-                    </View>
-
-                    {index === 0 && variantQuantity > 0 ? (
-                      <View style={styles.modalQtySelector}>
-                        <TouchableOpacity onPress={() => setVariantQuantity(q => Math.max(0, q - 1))} style={styles.modalQtyBtn}>
-                          <Minus size={14} color={COLORS.primary} />
-                        </TouchableOpacity>
-                        <Text style={styles.modalQtyText}>{variantQuantity}</Text>
-                        <TouchableOpacity onPress={() => setVariantQuantity(q => q + 1)} style={styles.modalQtyBtn}>
-                          <Plus size={14} color={COLORS.primary} />
-                        </TouchableOpacity>
-                      </View>
-                    ) : index === 0 ? (
-                      <TouchableOpacity style={styles.modalAddBtn} onPress={() => setVariantQuantity(1)}>
-                        <Text style={styles.modalAddText}>{STRINGS.add}</Text>
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity
-                        style={styles.modalAddBtn}
-                        onPress={() => {
-                          addItem({
-                            id: `${selectedModalItem.id}-v${index}`,
-                            title: selectedModalItem.title,
-                            weight: variant.weight,
-                            price: variant.price,
-                            image: selectedModalItem.image,
-                            isOutOfStock: selectedModalItem.isOutOfStock,
-                          });
-                          setModalVisible(false);
-                        }}
-                      >
-                        <Text style={styles.modalAddText}>{STRINGS.add}</Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                ))}
-
-                <TouchableOpacity
-                  style={styles.confirmBtn}
-                  onPress={() => {
-                    if (variantQuantity > 0 && selectedModalItem) {
-                      addItem({
-                        id: `${selectedModalItem.id}-v0`,
-                        title: selectedModalItem.title,
-                        weight: selectedModalItem.variants[0].weight,
-                        price: selectedModalItem.variants[0].price,
-                        image: selectedModalItem.image,
-                        isOutOfStock: selectedModalItem.isOutOfStock,
-                      });
-                    }
-                    setModalVisible(false);
-                  }}
-                >
-                  <Text style={styles.confirmBtnText}>{STRINGS.confirm}</Text>
-                </TouchableOpacity>
-
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      <Modal
+      <AddressRequiredModal
         visible={addressModalVisible}
-        transparent={true}
-        animationType="fade"
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.addressModalContent}>
-            <View style={styles.addressModalHeader}>
-              <View style={styles.addressHeaderRow}>
-                <View style={styles.mapPinCirc}>
-                  <MapPin size={16} color={COLORS.white} fill={COLORS.white} />
-                </View>
-                <Text style={styles.addressModalTitle}>{STRINGS.whereToDeliver}</Text>
-              </View>
-              <TouchableOpacity onPress={() => setAddressModalVisible(false)} style={styles.closeBtn}>
-                <Text style={styles.closeBtnText}>✕</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-              style={styles.addressModalBtn}
-              onPress={() => {
-                setAddressModalVisible(false);
-                navigation.navigate('Address' as never);
-              }}
-            >
-              <Text style={styles.addressModalBtnText}>{STRINGS.addAddress}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        onClose={() => setAddressModalVisible(false)}
+        onAddAddress={() => {
+          setAddressModalVisible(false);
+          navigation.navigate('Address' as never);
+        }}
+      />
 
     </SafeAreaView >
   );

@@ -4,7 +4,7 @@ export const STRINGS = {
   confirm: 'Confirm',
   delete: 'Delete',
   viewMore: 'View more',
-  
+
   // Product Details Screen
   options2: '2 options',
   similarProducts: 'Similar products',
@@ -63,4 +63,5 @@ export const STRINGS = {
   useCurrentLocation: 'Use current location',
   fetchingLocation: 'Fetching current location...',
   saveAddress: 'Save Address',
+  cencelYourOrder: "You can cancel your order for free within the first 60 seconds. After that, a cancellation fee will apply."
 };
