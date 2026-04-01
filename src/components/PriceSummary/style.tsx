@@ -6,7 +6,9 @@ import { FONTS } from '../../constants/fonts';
 export const styles = StyleSheet.create({
   billDetailsContainer: { backgroundColor: COLORS.white, margin: SPACING.m, borderRadius: 16, padding: SPACING.m, borderWidth: 1, borderColor: COLORS.dividerLight },
   billRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  billRowLeft: { flexDirection: 'row', alignItems: 'center' },
+  billRowLeft: { flexDirection: 'row', alignItems: 'center', flex: 1, marginRight: 8 },
+  iconWrap: { width: 22, height: 22, borderRadius: 6, backgroundColor: COLORS.iconBg, alignItems: 'center', justifyContent: 'center', marginRight: 8 },
+  iconWrapGreen: { backgroundColor: COLORS.primaryLight },
   billLabel: { fontSize: 12, color: COLORS.textMedium },
   savedOrangeTag: { backgroundColor: COLORS.orangeLight, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4, marginLeft: 8 },
   savedOrangeText: { color: COLORS.orange, fontSize: 9, fontFamily: FONTS.bold },
