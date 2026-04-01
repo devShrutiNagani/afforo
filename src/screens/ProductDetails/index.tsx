@@ -1,19 +1,18 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity, SafeAreaView, Dimensions, FlatList, ViewToken, Modal, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/AppNavigator';
-import { COLORS } from '../../constants/colors';
-import { SPACING } from '../../constants/spacing';
-import { ShoppingCart, ChevronDown, Minus, Plus, MapPin } from 'lucide-react-native';
-import { useCart } from '../../hooks/useCart';
-import { SIMILAR_ITEMS, SUGGESTED_ITEMS, MAIN_PRODUCT, PRODUCT_IMAGES } from '../../constants/mockData';
-import { URLS } from '../../constants/images';
-import { STRINGS } from '../../constants/strings';
-import { styles } from './style';
+import { ShoppingCart } from 'lucide-react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Dimensions, FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View, ViewToken } from 'react-native';
+import { AddressRequiredModal } from '../../components/AddressRequiredModal';
 import { SuggestedItem } from '../../components/SuggestedItem';
 import { VariantBottomSheet } from '../../components/VariantBottomSheet';
-import { AddressRequiredModal } from '../../components/AddressRequiredModal';
+import { COLORS } from '../../constants/colors';
+import { MAIN_PRODUCT, PRODUCT_IMAGES, SIMILAR_ITEMS, SUGGESTED_ITEMS } from '../../constants/mockData';
+import { SPACING } from '../../constants/spacing';
+import { STRINGS } from '../../constants/strings';
+import { useCart } from '../../hooks/useCart';
+import { RootStackParamList } from '../../navigation/AppNavigator';
+import { styles } from './style';
 
 const { width } = Dimensions.get('window');
 
